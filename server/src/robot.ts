@@ -58,6 +58,34 @@ class Robot {
         break;
     }
   }
+
+  left(): void {
+    if (this.x === null || this.y === null || this.direction === null) return;
+
+    const rotateLeft: Direction[] = [
+      Direction.NORTH,
+      Direction.WEST,
+      Direction.SOUTH,
+      Direction.EAST,
+    ];
+
+    const currentIndex = rotateLeft.indexOf(this.direction);
+    this.direction = rotateLeft[(currentIndex + 1) % 4];
+  }
+
+  right(): void {
+    if (this.x === null || this.y === null || this.direction === null) return;
+
+    const rotateRight: Direction[] = [
+      Direction.NORTH,
+      Direction.EAST,
+      Direction.SOUTH,
+      Direction.WEST,
+    ];
+
+    const currentIndex = rotateRight.indexOf(this.direction);
+    this.direction = rotateRight[(currentIndex + 1) % 4];
+  }
 }
 
 export default Robot;
