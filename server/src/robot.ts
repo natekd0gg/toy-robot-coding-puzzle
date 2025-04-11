@@ -55,6 +55,7 @@ class Robot {
         break;
       case Direction.EAST:
         if (this.x < this.tableSize - 1) this.x += 1;
+        break;
       case Direction.WEST:
         if (this.x > 0) this.x -= 1;
         break;
