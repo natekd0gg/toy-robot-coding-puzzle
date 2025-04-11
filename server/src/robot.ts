@@ -16,6 +16,48 @@ class Robot {
     this.direction = direction ?? null;
     this.tableSize = 5;
   }
+
+  private isValidPosition(x: number, y: number): boolean {
+    return x >= 0 && x < this.tableSize && y >= 0 && y < this.tableSize;
+  }
+
+  place(x: number, y: number, direction: Direction): void {
+    if (this.isValidPosition(x, y)) {
+      this.x = x;
+      this.y = y;
+      this.direction = direction;
+    } else {
+      throw new Error(
+        `Invalid position: (${x}, ${y}). Position must be within the ${this.tableSize}x${this.tableSize} grid.`
+      );
+    }
+  }
+
+  setDirection(direction: Direction): void {
+    if (this.x === null || this.y === null) {
+      throw new Error('Robot is not placed yet');
+    }
+
+    this.direction = direction;
+  }
+
+  move(): void {
+    if (this.x === null || this.y === null || this.direction === null) return;
+    // (0, 0) origin
+    switch (this.direction) {
+      case Direction.NORTH:
+        if (this.y < this.tableSize - 1) this.y += 1;
+        break;
+      case Direction.SOUTH:
+        if (this.y > 0) this.y -= 1;
+        break;
+      case Direction.EAST:
+        if (this.x < this.tableSize - 1) this.x += 1;
+      case Direction.WEST:
+        if (this.x > 0) this.x -= 1;
+        break;
+    }
+  }
 }
 
 export default Robot;
