@@ -113,7 +113,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/ping', (req: Request, res: Response) => {
-  res.send('pong 🏓');
+  res.send('pong has come back 🏓');
 });
 
 app.listen(port, () => {
