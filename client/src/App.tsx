@@ -2,24 +2,27 @@ import { useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
+import axios from 'axios';
 
 function App() {
   const [count, setCount] = useState(0);
-  const [ping, setPing] = useState('');
+
+  // import.meta.env.VITE_API_BASE_URL_PROD
+  // import.meta.env.VITE_API_BASE_URL_DEV;
+
+  const fetchPing = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL_PROD}report`
+      );
+      console.log('response', response.data);
+    } catch (error) {
+      console.error('error', error);
+    }
+  };
 
   useEffect(() => {
-    fetch(
-      'https://toy-robot-coding-puzzle-server-b4lk166xi-natekd0ggs-projects.vercel.app/ping'
-    )
-      .then((response) => response.text())
-      .then((data) => {
-        console.log('Response from /ping:', data);
-        setPing(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching /ping:', error);
-        setPing('Request failed');
-      });
+    fetchPing();
   }, []);
 
   return (
@@ -37,7 +40,6 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>Ping result: {ping}</p>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

@@ -111,6 +111,12 @@ class Robot {
       direction: this.direction,
     };
   }
+
+  reset(): void {
+    this.x = null;
+    this.y = null;
+    this.direction = null;
+  }
 }
 
 export default Robot;

@@ -8,15 +8,16 @@ describe('Robot', () => {
     robot = new Robot();
   });
 
-  it('should initialize robot with valid position and direction', () => {
-    const robot = new Robot(2, 2, Direction.NORTH);
-    expect(robot.report()).toEqual({ x: 2, y: 2, direction: Direction.NORTH });
-  });
-
   it('should throw an error when placing the robot at an invalid position', () => {
     expect(() => robot.place(-1, 0, Direction.NORTH)).toThrow(
       'Invalid position: (-1, 0). Position must be within the 5x5 grid.'
     );
+  });
+
+  it('should initialize robot with valid position and direction', () => {
+    const robot = new Robot(0, 0, Direction.NORTH);
+    robot.place(0, 0, Direction.NORTH);
+    expect(robot.report()).toEqual({ x: 0, y: 0, direction: Direction.NORTH });
   });
 
   it('should throw an error when setting direction if robot is not placed', () => {
@@ -63,7 +64,7 @@ describe('Robot', () => {
     });
   });
 
-  it('should throw an error for left command if robot is not placed', () => {
+  it('should throw an error for LEFT command if robot is not placed', () => {
     expect(() => {
       robot.left();
     }).toThrow('Robot must be placed on the table before it can face left.');
@@ -79,7 +80,7 @@ describe('Robot', () => {
     });
   });
 
-  it('should throw an error for right command if robot is not placed', () => {
+  it('should throw an error for RIGHT command if robot is not placed', () => {
     expect(() => {
       robot.right();
     }).toThrow('Robot must be placed on the table before it can face right.');

@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import Robot from './robot';
 import cors from 'cors';
-import { Direction, RobotPosition } from './types';
+import { Direction } from './types';
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -19,7 +19,7 @@ interface UpdateDirectionRequestBody {
   direction: Direction;
 }
 
-const robot = new Robot();
+export const robot = new Robot();
 
 app.post('/place', (req: Request<{}, {}, PlaceRequestBody>, res: Response) => {
   const { x, y, direction } = req.body;
@@ -27,10 +27,9 @@ app.post('/place', (req: Request<{}, {}, PlaceRequestBody>, res: Response) => {
   try {
     robot.place(x, y, direction);
     res.status(200).send({
-      message: `Robot is now placed at (${x}, ${y} facing ${direction})`,
+      message: `Robot is now placed at (${x}, ${y}) facing ${direction}`,
     });
   } catch (error) {
-    console.error(error);
     res.status(400).send({ message: 'Error placing robot' });
   }
 });
@@ -49,7 +48,6 @@ app.post(
         status: updateDirection,
       });
     } catch (error) {
-      console.error(error);
       res.status(400).send({ message: 'Error updating direction' });
     }
   }
@@ -65,7 +63,6 @@ app.post('/move', (req: Request, res: Response) => {
       status: robotPosition,
     });
   } catch (error) {
-    console.error(error);
     res.status(400).send({ message: 'Error moving robot' });
   }
 });
@@ -78,7 +75,6 @@ app.post('/left', (req: Request, res: Response) => {
       .status(200)
       .send({ message: 'Robot rotated left', status: updatedDirection });
   } catch (error) {
-    console.error(error);
     res.status(400).send({ message: 'Error rotating left' });
   }
 });
@@ -91,7 +87,6 @@ app.post('/right', (req: Request, res: Response) => {
       .status(200)
       .send({ message: 'Robot rotated right', status: updatedDirection });
   } catch (error) {
-    console.error(error);
     res.status(400).send({ message: 'Error rotating right' });
   }
 });
@@ -102,7 +97,6 @@ app.get('/report', (req: Request, res: Response) => {
 
     res.status(200).send({ status });
   } catch (error) {
-    console.error(error);
     res.status(400).send({ message: 'Error reporting robot' });
   }
 });
@@ -110,10 +104,6 @@ app.get('/report', (req: Request, res: Response) => {
 /*Test*/
 app.get('/', (req: Request, res: Response) => {
   res.send('This is live on production');
-});
-
-app.get('/ping', (req: Request, res: Response) => {
-  res.send('pong has come back 🏓');
 });
 
 app.listen(port, () => {

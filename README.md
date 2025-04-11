@@ -1,83 +1,35 @@
-# Toy Robot Coding Puzzle
+# Requirements
 
-- The application is a simulation of a toy robot moving on a square tabletop, of dimensions 5 units x 5 units.
-- There are no other obstructions on the table surface.
-- The robot is free to roam around the surface of the table, but must be prevented from falling to destruction. Any movement
-  that would result in the robot falling from the table must be prevented, however further valid movement commands must still
-  be allowed.
-
-- Create an application that can read in commands of the following form:
-
-```
-PLACE X,Y,F
-MOVE
-LEFT
-RIGHT
-REPORT
-```
-
+- A robot that is not on the table can choose to ignore the MOVE, LEFT, RIGHT and REPORT command
 - PLACE will put the toy robot on the table in position X,Y and facing NORTH, SOUTH, EAST or WEST.
-- The origin (0,0) can be considered to be the SOUTH WEST most corner.
-- The first valid command to the robot is a PLACE command, after that, any sequence of commands may be issued, in any order, including another PLACE command. The application should discard all commands in the sequence until a valid PLACE command has been executed.
+- The first valid command to the robot is a PLACE command, after that, any sequence of commands may be issued, in any order.including another PLACE command. The application should discard all commands in the sequence until a valid PLACE command has been executed.
 - MOVE will move the toy robot one unit forward in the direction it is currently facing.
 - LEFT and RIGHT will rotate the robot 90 degrees in the specified direction without changing the position of the robot.
 - REPORT will announce the X,Y and F of the robot. This can be in any form, but standard output is sufficient.
 
-- A robot that is not on the table can choose the ignore the MOVE, LEFT, RIGHT and REPORT commands.
-  . Input can be from a file, or from standard input, as the developer chooses.
-  . Provide test data to exercise the application.
+# Design Process
 
-> Constraints:
-> The toy robot must not fall off the table during movement. This also includes the initial placement of the toy robot.
-> Any move that would cause the robot to fall must be ignored.
+## Backend/Server
 
-Example Input and Output:
+- For backend I used Node and Express with Typescript
+- Backend to do all heavylifting, handle the business logic, robot operations, and API logic.
+- Robot.ts will contain Robot class and encapsulate all robot operations/logic
+- Index.ts will handle routes/requests from the client side
+- Jest is used for testing edge cases and also covers a, b, c example input and output:
+- To run unit tests, please run `npm run test` in the server folder.
 
-a)
+## Client/Frontend
 
-```
-PLACE 0,0,NORTH
-MOVE
-REPORT
-Output: 0,1,NORTH
-```
+- For frontend I used React and Typescript + Vite Build Tool
+- Used to call API to perform robot logic and display data from server to the client side.
+- Handle user interactions and state management.
+- Can also use React Testing Library to test the UI (not implemented)
 
-b)
+## Start Application
 
-```
-PLACE 0,0,NORTH
-LEFT
-REPORT
-Output: 0,0,WEST
-```
+- To run the app locally, please install dependencies using `npm install` in both client and server folder and run `npm run dev` in the terminal.
 
-c)
+## Deployment
 
-```
-PLACE 1,2,EAST
-MOVE
-MOVE
-LEFT
-MOVE
-REPORT
-Output: 3,3,NORTH
-```
-
-## Guideline
-
-- Think about your solution as a code that will be submitted to production. Add tests to make sure it's bulletproof.
-- Add a README file (or call it a different name) where you can explain your design decisions and any other information you would like to add.  	 
-
-## Submitting your solution
-
-- If you have a GitHub account, fork this repo and when your solution is ready for submission, send to us over email your ready to view forked repo URL
-- Otherwise, please use `git bundle` to package up a copy of your repository (with complete commit history) as a single file and send it to us 
-  
-  i.e
-  ```
-  git bundle create toy-robot-coding-challenge.bundle master
-  ```
-  
-----------------
-
-  Good luck and looking forward to you submission!
+- For deployment, Vercel will be used to host the application.
+- You can view the deployed version here: https://toy-robot-coding-puzzle-client.vercel.app/.
