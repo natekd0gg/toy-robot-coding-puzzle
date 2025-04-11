@@ -42,7 +42,9 @@ class Robot {
   }
 
   move(): void {
-    if (this.x === null || this.y === null || this.direction === null) return;
+    if (this.x === null || this.y === null || this.direction === null) {
+      throw new Error('Robot must be placed on the table before it can move.');
+    }
     // (0, 0) origin
     switch (this.direction) {
       case Direction.NORTH:
@@ -60,7 +62,11 @@ class Robot {
   }
 
   left(): void {
-    if (this.x === null || this.y === null || this.direction === null) return;
+    if (this.x === null || this.y === null || this.direction === null) {
+      throw new Error(
+        'Robot must be placed on the table before it can face left.'
+      );
+    }
 
     const rotateLeft: Direction[] = [
       Direction.NORTH,
@@ -74,7 +80,11 @@ class Robot {
   }
 
   right(): void {
-    if (this.x === null || this.y === null || this.direction === null) return;
+    if (this.x === null || this.y === null || this.direction === null) {
+      throw new Error(
+        'Robot must be placed on the table before it can face right.'
+      );
+    }
 
     const rotateRight: Direction[] = [
       Direction.NORTH,
@@ -85,6 +95,20 @@ class Robot {
 
     const currentIndex = rotateRight.indexOf(this.direction);
     this.direction = rotateRight[(currentIndex + 1) % 4];
+  }
+
+  report(): RobotPosition {
+    if (this.x === null || this.y === null || this.direction === null) {
+      throw new Error(
+        'Robot must be placed on the table before position can be reported.'
+      );
+    }
+
+    return {
+      x: this.x,
+      y: this.y,
+      direction: this.direction,
+    };
   }
 }
 
