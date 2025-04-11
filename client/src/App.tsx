@@ -103,7 +103,70 @@ const App = () => {
     }
   };
 
-  return <></>;
+  return (
+    <div className="container">
+      <h1>Toy Robot Coding Puzzle</h1>
+      {!robotPlaced && (
+        <div className="direction-select">
+          <label htmlFor="direction">Direction:</label>
+          <select
+            id="direction"
+            className="direction-dropdown"
+            value={robotPosition.direction ?? ''}
+            onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
+              updateRobotDirection(event.target.value as Direction)
+            }
+          >
+            <option value={Direction.NORTH}>NORTH</option>
+            <option value={Direction.EAST}>EAST</option>
+            <option value={Direction.SOUTH}>SOUTH</option>
+            <option value={Direction.WEST}>WEST</option>
+          </select>
+        </div>
+      )}
+      <div className="button-container">
+        {robotPlaced && (
+          <button
+            onClick={() => {
+              setRobotPlaced(false);
+              setReport('');
+            }}
+          >
+            PLACE
+          </button>
+        )}
+        <button
+          onClick={moveRobot}
+          disabled={!robotPlaced}
+          className="command-btn move-btn"
+        >
+          MOVE
+        </button>
+        <button
+          onClick={left}
+          disabled={!robotPlaced}
+          className="command-btn left-btn"
+        >
+          LEFT
+        </button>
+        <button
+          onClick={right}
+          disabled={!robotPlaced}
+          className="command-btn right-btn"
+        >
+          RIGHT
+        </button>
+        <button
+          onClick={reportRobot}
+          disabled={!robotPlaced}
+          className="command-btn report-btn"
+        >
+          REPORT
+        </button>
+      </div>
+      {report && <p className="report-message">{report}</p>}
+    </div>
+  );
 };
 
 export default App;
