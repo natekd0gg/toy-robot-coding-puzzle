@@ -20,6 +20,8 @@ Index.ts will handle API logic (Handles routes/requests)
 
 Testing
 
+- Jest is used for testing edge cases and also covers a, b, c example Input and Output:
+
 # client
 
 Use vite build tool for react frontend
