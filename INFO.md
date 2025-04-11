@@ -11,7 +11,7 @@
   Input can be from a file, or from standard input, as the developer chooses.
   Provide test data to exercise the application.
 
-# server
+# Server
 
 Use node.js with express and typescript
 
@@ -21,7 +21,12 @@ Index.ts will handle API logic (Handles routes/requests)
 Testing
 
 - Jest is used for testing edge cases and also covers a, b, c example Input and Output:
+- To run tests, please run NPM run test
 
-# client
+# Client
 
 Use vite build tool for react frontend
+
+# Deployment
+
+https://toy-robot-coding-puzzle-client.vercel.app/

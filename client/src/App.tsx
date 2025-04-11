@@ -1,10 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [ping, setPing] = useState('');
+
+  useEffect(() => {
+    fetch(
+      'https://toy-robot-coding-puzzle-server-b4lk166xi-natekd0ggs-projects.vercel.app/ping'
+    )
+      .then((response) => response.text())
+      .then((data) => {
+        console.log('Response from /ping:', data);
+        setPing(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching /ping:', error);
+        setPing('Request failed');
+      });
+  }, []);
 
   return (
     <>
@@ -21,6 +37,7 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+        <p>Ping result: {ping}</p>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
@@ -29,7 +46,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
