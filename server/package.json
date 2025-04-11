@@ -6,7 +6,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.ts",
+    "start": "npx nodemon src/index.ts",
+    "dev": "npx nodemon src/index.ts",
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
