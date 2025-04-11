@@ -1,54 +1,109 @@
-import { useEffect, useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import { useState } from 'react';
 import axios from 'axios';
+import { RobotPosition, Direction } from './types/types';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0);
-
+const App = () => {
   // import.meta.env.VITE_API_BASE_URL_PROD
   // import.meta.env.VITE_API_BASE_URL_DEV;
+  const [robotPosition, setRobotPosition] = useState<RobotPosition>({
+    x: null,
+    y: null,
+    direction: null,
+  });
+  const [report, setReport] = useState<string>('');
+  const [robotPlaced, setRobotPlaced] = useState<boolean>(false);
 
-  const fetchPing = async () => {
+  const placeRobot = async (
+    x: number,
+    y: number,
+    direction: Direction
+  ): Promise<void> => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL_PROD}report`
-      );
-      console.log('response', response.data);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL_DEV}/place`, {
+        x,
+        y,
+        direction,
+      });
+      setRobotPosition({ x, y, direction });
     } catch (error) {
-      console.error('error', error);
+      console.error('Error placing robot:', error);
     }
   };
 
-  useEffect(() => {
-    fetchPing();
-  }, []);
+  const updateRobotDirection = async (
+    newDirection: Direction
+  ): Promise<void> => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL_DEV}/updateDirection`,
+        {
+          direction: newDirection,
+        }
+      );
+      setRobotPosition((prevState) => ({
+        ...prevState,
+        direction: newDirection,
+      }));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
-}
+  const moveRobot = async (): Promise<void> => {
+    setReport('');
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL_DEV}/move`
+      );
+
+      const { robotPosition } = response.data;
+      setRobotPosition(robotPosition);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const left = async (): Promise<void> => {
+    setReport('');
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL_DEV}/left`
+      );
+      setRobotPosition(response.data.status);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const right = async (): Promise<void> => {
+    setReport('');
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL_DEV}/right`
+      );
+      setRobotPosition(response.data.status);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const reportRobot = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL_DEV}/report`
+      );
+      const { x, y, direction } = response.data.status;
+      setReport(
+        `Robot is at position (${x}, ${y}) and direction ${direction}.`
+      );
+    } catch (error) {
+      console.error(error);
+      setReport('Error reporting robot');
+    }
+  };
+
+  return <></>;
+};
 
 export default App;

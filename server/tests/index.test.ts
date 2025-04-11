@@ -41,13 +41,13 @@ describe('Robot API', () => {
       direction: Direction.NORTH,
     });
 
-    const reponse = await request(app)
+    const response = await request(app)
       .post('/updateDirection')
       .send({ direction: Direction.SOUTH });
 
-    expect(reponse.status).toBe(200);
-    expect(reponse.body.message).toBe('Robot direction updated to SOUTH');
-    expect(reponse.body.status.direction).toBe(Direction.SOUTH);
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Robot direction updated to SOUTH');
+    expect(response.body.status.direction).toBe(Direction.SOUTH);
   });
 
   it('should return error when moving robot before placing the robot', async () => {
@@ -129,9 +129,9 @@ describe('Robot API', () => {
       y: 0,
       direction: Direction.NORTH,
     });
-    const reponse = await request(app).get('/report');
-    expect(reponse.status).toBe(200);
-    expect(reponse.body.status).toStrictEqual({
+    const response = await request(app).get('/report');
+    expect(response.status).toBe(200);
+    expect(response.body.status).toStrictEqual({
       x: 0,
       y: 0,
       direction: Direction.NORTH,
