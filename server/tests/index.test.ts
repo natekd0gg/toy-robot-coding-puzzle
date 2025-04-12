@@ -1,6 +1,7 @@
 import app, { robot } from '../src/index';
 import request from 'supertest';
 import { Direction } from '../src/types';
+import '@types/jest';
 
 describe('Robot API', () => {
   beforeEach(() => {

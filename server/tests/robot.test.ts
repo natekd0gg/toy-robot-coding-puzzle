@@ -1,5 +1,6 @@
 import Robot from '../src/robot';
 import { Direction } from '../src/types';
+import '@types/jest';
 
 describe('Robot', () => {
   let robot: Robot;
