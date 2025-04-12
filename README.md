@@ -28,9 +28,10 @@
 # Start Application
 
 - To run the app locally, please install dependencies using `npm install` in both client and server folder and run `npm run dev` in the terminal.
+- In client, App.tsx change baseUrl to local, http://localhost:8080
 
 # Deployment
 
-- For deployment, Vercel will be used to host the application.
+- For deployment, Vercel is used to host the application.
 - Hosted React Frontend + backend hosted as serverless functions
 - You can view the deployed version here: https://toy-robot-coding-puzzle-client.vercel.app/.

@@ -82,11 +82,6 @@ app.get('/report', (req: Request, res: Response) => {
   }
 });
 
-/*Test*/
-app.get('/', (req: Request, res: Response) => {
-  res.send('This is another test');
-});
-
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

@@ -71,10 +71,6 @@ app.get('/report', (req, res) => {
         res.status(400).send({ message: 'Error reporting robot' });
     }
 });
-/*Test*/
-app.get('/', (req, res) => {
-    res.send('This is another test');
-});
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
