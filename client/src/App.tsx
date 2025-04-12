@@ -14,7 +14,7 @@ const App = () => {
   const [robotPlaced, setRobotPlaced] = useState<boolean>(false);
   const [report, setReport] = useState<string>('');
   // const devBaseUrl = 'http://localhost:8080';
-  const prodBaseUrl = 'https://toy-robot-coding-puzzle-server.vercel.app';
+  // const prodBaseUrl = 'https://toy-robot-coding-puzzle-server.vercel.app';
 
   const placeRobot = async (
     x: number,
