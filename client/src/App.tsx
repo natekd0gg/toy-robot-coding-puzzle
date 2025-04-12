@@ -24,7 +24,7 @@ const App = () => {
     console.log(`${x}, ${y}, direction: ${direction}`);
     try {
       await axios.post(
-        `$https://toy-robot-coding-puzzle-server.vercel.app/place`,
+        'https://toy-robot-coding-puzzle-server.vercel.app/place',
         {
           x,
           y,
@@ -41,7 +41,7 @@ const App = () => {
     setReport('');
     try {
       const response = await axios.post(
-        `https://toy-robot-coding-puzzle-server.vercel.app/move`
+        'https://toy-robot-coding-puzzle-server.vercel.app/move'
       );
 
       const robotPosition = response.data.status;
@@ -57,7 +57,7 @@ const App = () => {
     setReport('');
     try {
       const response = await axios.post(
-        `https://toy-robot-coding-puzzle-server.vercel.app/left`
+        'https://toy-robot-coding-puzzle-server.vercel.app/left'
       );
       setRobotPosition(response.data.status);
     } catch (error) {
@@ -69,7 +69,7 @@ const App = () => {
     setReport('');
     try {
       const response = await axios.post(
-        `https://toy-robot-coding-puzzle-server.vercel.app/right`
+        'https://toy-robot-coding-puzzle-server.vercel.app/right'
       );
       setRobotPosition(response.data.status);
     } catch (error) {
@@ -80,7 +80,7 @@ const App = () => {
   const reportRobot = async () => {
     try {
       const response = await axios.get(
-        `https://toy-robot-coding-puzzle-server.vercel.app/report`
+        'https://toy-robot-coding-puzzle-server.vercel.app/report'
       );
       const { x, y, direction } = response.data.status;
       setReport(
