@@ -2,7 +2,7 @@ import { Direction } from './types';
 
 export interface TableProps {
   placeRobot: (x: number, y: number, direction: Direction) => void;
-  direction: Direction | null;
+  direction?: Direction | null;
   robotPlaced: boolean;
   location: any;
 }

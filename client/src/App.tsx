@@ -5,8 +5,6 @@ import { RobotPosition, Direction } from './types/types';
 import './App.css';
 
 const App = () => {
-  // import.meta.env.VITE_API_BASE_URL_PROD
-  // import.meta.env.VITE_API_BASE_URL_DEV;
   const [robotPosition, setRobotPosition] = useState<RobotPosition | null>(
     null
   );
@@ -15,6 +13,8 @@ const App = () => {
   );
   const [robotPlaced, setRobotPlaced] = useState<boolean>(false);
   const [report, setReport] = useState<string>('');
+  // const devBaseUrl = 'http://localhost:8080';
+  const prodBaseUrl = 'https://toy-robot-coding-puzzle-server.vercel.app';
 
   const placeRobot = async (
     x: number,
@@ -23,11 +23,14 @@ const App = () => {
   ): Promise<void> => {
     console.log(`${x}, ${y}, direction: ${direction}`);
     try {
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL_DEV}/place`, {
-        x,
-        y,
-        direction,
-      });
+      await axios.post(
+        `$https://toy-robot-coding-puzzle-server.vercel.app/place`,
+        {
+          x,
+          y,
+          direction,
+        }
+      );
       setRobotPosition({ x, y, direction });
     } catch (error) {
       console.error('Error placing robot:', error);
@@ -38,10 +41,12 @@ const App = () => {
     setReport('');
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL_DEV}/move`
+        `https://toy-robot-coding-puzzle-server.vercel.app/move`
       );
 
-      const { robotPosition } = response.data;
+      const robotPosition = response.data.status;
+
+      console.log('robot location', robotPosition);
       setRobotPosition(robotPosition);
     } catch (error) {
       console.error(error);
@@ -52,7 +57,7 @@ const App = () => {
     setReport('');
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL_DEV}/left`
+        `https://toy-robot-coding-puzzle-server.vercel.app/left`
       );
       setRobotPosition(response.data.status);
     } catch (error) {
@@ -64,7 +69,7 @@ const App = () => {
     setReport('');
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL_DEV}/right`
+        `https://toy-robot-coding-puzzle-server.vercel.app/right`
       );
       setRobotPosition(response.data.status);
     } catch (error) {
@@ -75,7 +80,7 @@ const App = () => {
   const reportRobot = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL_DEV}/report`
+        `https://toy-robot-coding-puzzle-server.vercel.app/report`
       );
       const { x, y, direction } = response.data.status;
       setReport(
@@ -92,10 +97,11 @@ const App = () => {
       <h1>Toy Robot Coding Puzzle</h1>
       <Table
         placeRobot={(x, y, direction) => {
-          setRobotPlaced(true);
-          placeRobot(x, y, direction);
+          placeRobot(x, y, direction).then(() => {
+            setRobotPlaced(true);
+          });
         }}
-        direction={selectedDirection}
+        direction={robotPlaced ? robotPosition?.direction : selectedDirection}
         robotPlaced={robotPlaced}
         location={robotPosition}
       />

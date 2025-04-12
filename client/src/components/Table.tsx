@@ -12,8 +12,12 @@ const Table: React.FC<TableProps> = ({
     Array.from({ length: 5 }, (_, x) => ({ row: 4 - y, col: x }))
   );
 
-  console.log('location', location);
-  console.log('direction', direction);
+  const directionToAngle = {
+    NORTH: 0,
+    EAST: 90,
+    SOUTH: 180,
+    WEST: 270,
+  };
 
   return (
     <div className="table">
@@ -22,19 +26,30 @@ const Table: React.FC<TableProps> = ({
           {row.map((square) => (
             <div
               key={`table-cell-${square.col}-${square.row}`}
-              className="table-cell"
               onClick={() => {
                 console.log('clicked');
+                console.log(square.col, square.row, direction);
+                if (robotPlaced) return;
                 if (direction) {
                   placeRobot(square.col, square.row, direction);
                 }
               }}
+              className={`table-cell ${robotPlaced ? 'disabled-cell' : ''}`}
             >
               {robotPlaced &&
-              square.col === location.x &&
-              square.row === location.y ? (
+              square.col === location?.x &&
+              square.row === location?.y ? (
                 <div className="robot-wrapper">
-                  <img src="/assets/robot.png" alt="" className="robot-img" />
+                  <img
+                    src="/assets/robot.png"
+                    alt="robot"
+                    style={{
+                      transform: direction
+                        ? `rotate(${directionToAngle[direction]}deg)`
+                        : undefined,
+                    }}
+                    className="robot-img"
+                  />
                 </div>
               ) : (
                 <p>
