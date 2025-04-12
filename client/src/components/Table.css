@@ -7,13 +7,15 @@
   align-items: center;
   border: solid grey 1px;
   background-color: whitesmoke;
+  color: lightgrey;
+  font-size: small;
+  vertical-align: middle;
   position: relative;
 }
 
 .table-cell:hover {
   background-color: #87cefa;
   cursor: pointer;
-  transform: scale(1.25);
 }
 
 .disabled-cell {
@@ -33,7 +35,16 @@
 }
 
 .robot-img {
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   object-fit: contain;
+  display: block;
+}
+
+.cell-text {
+  font-size: 14px;
+  margin: 0;
+  line-height: 1;
+  display: block;
+  text-align: center;
 }

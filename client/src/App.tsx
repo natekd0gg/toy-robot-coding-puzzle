@@ -14,6 +14,7 @@ const App = () => {
   const [robotPlaced, setRobotPlaced] = useState<boolean>(false);
   const [report, setReport] = useState<string>('');
   // http://localhost:8080
+  // https://toy-robot-coding-puzzle-server.vercel.app
   const baseUrl = 'https://toy-robot-coding-puzzle-server.vercel.app';
 
   const placeRobot = async (
@@ -21,7 +22,6 @@ const App = () => {
     y: number,
     direction: Direction
   ): Promise<void> => {
-    console.log(`${x}, ${y}, direction: ${direction}`);
     try {
       await axios.post(`${baseUrl}/place`, {
         x,
@@ -96,7 +96,9 @@ const App = () => {
       />
       {!robotPlaced && (
         <div className="direction-select">
-          <label htmlFor="direction">Direction:</label>
+          <label htmlFor="direction" id="direction-label">
+            Direction:
+          </label>
           <select
             id="direction"
             className="direction-dropdown"
@@ -119,38 +121,47 @@ const App = () => {
               setRobotPlaced(false);
               setReport('');
             }}
+            className="command-btn place-btn"
           >
-            PLACE
+            place
           </button>
         )}
-        <button
-          onClick={moveRobot}
-          disabled={!robotPlaced}
-          className="command-btn move-btn"
-        >
-          MOVE
-        </button>
-        <button
-          onClick={left}
-          disabled={!robotPlaced}
-          className="command-btn left-btn"
-        >
-          LEFT
-        </button>
-        <button
-          onClick={right}
-          disabled={!robotPlaced}
-          className="command-btn right-btn"
-        >
-          RIGHT
-        </button>
-        <button
-          onClick={reportRobot}
-          disabled={!robotPlaced}
-          className="command-btn report-btn"
-        >
-          REPORT
-        </button>
+        {robotPlaced && (
+          <button
+            onClick={moveRobot}
+            disabled={!robotPlaced}
+            className="command-btn move-btn"
+          >
+            move
+          </button>
+        )}
+        {robotPlaced && (
+          <button
+            onClick={left}
+            disabled={!robotPlaced}
+            className="command-btn left-btn"
+          >
+            left
+          </button>
+        )}
+        {robotPlaced && (
+          <button
+            onClick={right}
+            disabled={!robotPlaced}
+            className="command-btn right-btn"
+          >
+            right
+          </button>
+        )}
+        {robotPlaced && (
+          <button
+            onClick={reportRobot}
+            disabled={!robotPlaced}
+            className="command-btn report-btn"
+          >
+            report
+          </button>
+        )}
       </div>
       {report && <p className="report-message">{report}</p>}
     </div>

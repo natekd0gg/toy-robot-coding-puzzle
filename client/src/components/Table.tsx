@@ -27,8 +27,6 @@ const Table: React.FC<TableProps> = ({
             <div
               key={`table-cell-${square.col}-${square.row}`}
               onClick={() => {
-                console.log('clicked');
-                console.log(square.col, square.row, direction);
                 if (robotPlaced) return;
                 if (direction) {
                   placeRobot(square.col, square.row, direction);
@@ -43,18 +41,18 @@ const Table: React.FC<TableProps> = ({
                   <img
                     src="/assets/robot.png"
                     alt="robot"
+                    className="robot-img"
                     style={{
                       transform: direction
                         ? `rotate(${directionToAngle[direction]}deg)`
                         : undefined,
                     }}
-                    className="robot-img"
                   />
                 </div>
               ) : (
-                <p>
+                <span className="cell-text">
                   ({square.col}, {square.row})
-                </p>
+                </span>
               )}
             </div>
           ))}
