@@ -1,24 +1,27 @@
 import { useState } from 'react';
 import axios from 'axios';
+import Table from './components/Table';
 import { RobotPosition, Direction } from './types/types';
 import './App.css';
 
 const App = () => {
   // import.meta.env.VITE_API_BASE_URL_PROD
   // import.meta.env.VITE_API_BASE_URL_DEV;
-  const [robotPosition, setRobotPosition] = useState<RobotPosition>({
-    x: null,
-    y: null,
-    direction: null,
-  });
-  const [report, setReport] = useState<string>('');
+  const [robotPosition, setRobotPosition] = useState<RobotPosition | null>(
+    null
+  );
+  const [selectedDirection, setSelectedDirection] = useState<Direction>(
+    Direction.NORTH
+  );
   const [robotPlaced, setRobotPlaced] = useState<boolean>(false);
+  const [report, setReport] = useState<string>('');
 
   const placeRobot = async (
     x: number,
     y: number,
     direction: Direction
   ): Promise<void> => {
+    console.log(`${x}, ${y}, direction: ${direction}`);
     try {
       await axios.post(`${import.meta.env.VITE_API_BASE_URL_DEV}/place`, {
         x,
@@ -28,25 +31,6 @@ const App = () => {
       setRobotPosition({ x, y, direction });
     } catch (error) {
       console.error('Error placing robot:', error);
-    }
-  };
-
-  const updateRobotDirection = async (
-    newDirection: Direction
-  ): Promise<void> => {
-    try {
-      await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL_DEV}/updateDirection`,
-        {
-          direction: newDirection,
-        }
-      );
-      setRobotPosition((prevState) => ({
-        ...prevState,
-        direction: newDirection,
-      }));
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -106,15 +90,24 @@ const App = () => {
   return (
     <div className="container">
       <h1>Toy Robot Coding Puzzle</h1>
+      <Table
+        placeRobot={(x, y, direction) => {
+          setRobotPlaced(true);
+          placeRobot(x, y, direction);
+        }}
+        direction={selectedDirection}
+        robotPlaced={robotPlaced}
+        location={robotPosition}
+      />
       {!robotPlaced && (
         <div className="direction-select">
           <label htmlFor="direction">Direction:</label>
           <select
             id="direction"
             className="direction-dropdown"
-            value={robotPosition.direction ?? ''}
+            value={selectedDirection}
             onChange={(event: React.ChangeEvent<HTMLSelectElement>) =>
-              updateRobotDirection(event.target.value as Direction)
+              setSelectedDirection(event.target.value as Direction)
             }
           >
             <option value={Direction.NORTH}>NORTH</option>

@@ -25,11 +25,12 @@
 - Handle user interactions and state management.
 - Can also use React Testing Library to test the UI (not implemented)
 
-## Start Application
+# Start Application
 
 - To run the app locally, please install dependencies using `npm install` in both client and server folder and run `npm run dev` in the terminal.
 
-## Deployment
+# Deployment
 
 - For deployment, Vercel will be used to host the application.
+- Hosted React Frontend + backend hosted as serverless functions
 - You can view the deployed version here: https://toy-robot-coding-puzzle-client.vercel.app/.
