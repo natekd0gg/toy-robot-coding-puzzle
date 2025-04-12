@@ -13,8 +13,8 @@ const App = () => {
   );
   const [robotPlaced, setRobotPlaced] = useState<boolean>(false);
   const [report, setReport] = useState<string>('');
-  // const devBaseUrl = 'http://localhost:8080';
-  // const prodBaseUrl = 'https://toy-robot-coding-puzzle-server.vercel.app';
+  // http://localhost:8080
+  const baseUrl = 'https://toy-robot-coding-puzzle-server.vercel.app';
 
   const placeRobot = async (
     x: number,
@@ -23,14 +23,11 @@ const App = () => {
   ): Promise<void> => {
     console.log(`${x}, ${y}, direction: ${direction}`);
     try {
-      await axios.post(
-        'https://toy-robot-coding-puzzle-server.vercel.app/place',
-        {
-          x,
-          y,
-          direction,
-        }
-      );
+      await axios.post(`${baseUrl}/place`, {
+        x,
+        y,
+        direction,
+      });
       setRobotPosition({ x, y, direction });
     } catch (error) {
       console.error('Error placing robot:', error);
@@ -40,9 +37,7 @@ const App = () => {
   const moveRobot = async (): Promise<void> => {
     setReport('');
     try {
-      const response = await axios.post(
-        'https://toy-robot-coding-puzzle-server.vercel.app/move'
-      );
+      const response = await axios.post(`${baseUrl}/move`);
 
       const robotPosition = response.data.status;
 
@@ -56,9 +51,7 @@ const App = () => {
   const left = async (): Promise<void> => {
     setReport('');
     try {
-      const response = await axios.post(
-        'https://toy-robot-coding-puzzle-server.vercel.app/left'
-      );
+      const response = await axios.post(`${baseUrl}/left`);
       setRobotPosition(response.data.status);
     } catch (error) {
       console.error(error);
@@ -68,9 +61,7 @@ const App = () => {
   const right = async (): Promise<void> => {
     setReport('');
     try {
-      const response = await axios.post(
-        'https://toy-robot-coding-puzzle-server.vercel.app/right'
-      );
+      const response = await axios.post(`${baseUrl}/right`);
       setRobotPosition(response.data.status);
     } catch (error) {
       console.log(error);
@@ -79,9 +70,7 @@ const App = () => {
 
   const reportRobot = async () => {
     try {
-      const response = await axios.get(
-        'https://toy-robot-coding-puzzle-server.vercel.app/report'
-      );
+      const response = await axios.get(`${baseUrl}/report`);
       const { x, y, direction } = response.data.status;
       setReport(
         `Robot is at position (${x}, ${y}) and direction ${direction}.`
