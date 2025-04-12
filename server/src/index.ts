@@ -34,25 +34,6 @@ app.post('/place', (req: Request<{}, {}, PlaceRequestBody>, res: Response) => {
   }
 });
 
-app.post(
-  '/updateDirection',
-  (req: Request<{}, {}, UpdateDirectionRequestBody>, res: Response) => {
-    const { direction } = req.body;
-
-    try {
-      robot.setDirection(direction);
-      const updateDirection = robot.report();
-
-      res.status(200).send({
-        message: `Robot direction updated to ${direction}`,
-        status: updateDirection,
-      });
-    } catch (error) {
-      res.status(400).send({ message: 'Error updating direction' });
-    }
-  }
-);
-
 app.post('/move', (req: Request, res: Response) => {
   try {
     robot.move();
@@ -103,7 +84,7 @@ app.get('/report', (req: Request, res: Response) => {
 
 /*Test*/
 app.get('/', (req: Request, res: Response) => {
-  res.send('This is live on production');
+  res.send('This is another test');
 });
 
 app.listen(port, () => {

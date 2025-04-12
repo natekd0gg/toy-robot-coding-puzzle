@@ -20,23 +20,6 @@ describe('Robot', () => {
     expect(robot.report()).toEqual({ x: 0, y: 0, direction: Direction.NORTH });
   });
 
-  it('should throw an error when setting direction if robot is not placed', () => {
-    expect(() => {
-      robot.setDirection(Direction.EAST);
-    }).toThrow('Robot is not placed yet');
-  });
-
-  it('should set a new direction after placing the robot', () => {
-    robot.place(0, 0, Direction.NORTH);
-    robot.setDirection(Direction.EAST);
-
-    expect(robot.report()).toStrictEqual({
-      x: 0,
-      y: 0,
-      direction: Direction.EAST,
-    });
-  });
-
   it('should throw an error moving the robot if robot is not placed', () => {
     expect(() => {
       robot.move();

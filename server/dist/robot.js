@@ -21,12 +21,6 @@ class Robot {
             throw new Error(`Invalid position: (${x}, ${y}). Position must be within the ${this.tableSize}x${this.tableSize} grid.`);
         }
     }
-    setDirection(direction) {
-        if (this.x === null || this.y === null) {
-            throw new Error('Robot is not placed yet');
-        }
-        this.direction = direction;
-    }
     move() {
         if (this.x === null || this.y === null || this.direction === null) {
             throw new Error('Robot must be placed on the table before it can move.');
@@ -86,6 +80,11 @@ class Robot {
             y: this.y,
             direction: this.direction,
         };
+    }
+    reset() {
+        this.x = null;
+        this.y = null;
+        this.direction = null;
     }
 }
 exports.default = Robot;

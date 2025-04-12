@@ -33,14 +33,6 @@ class Robot {
     }
   }
 
-  setDirection(direction: Direction): void {
-    if (this.x === null || this.y === null) {
-      throw new Error('Robot is not placed yet');
-    }
-
-    this.direction = direction;
-  }
-
   move(): void {
     if (this.x === null || this.y === null || this.direction === null) {
       throw new Error('Robot must be placed on the table before it can move.');

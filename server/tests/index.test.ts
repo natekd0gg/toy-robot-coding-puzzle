@@ -25,31 +25,6 @@ describe('Robot API', () => {
     );
   });
 
-  it('should return error when updating direction before placing the robot', async () => {
-    const response = await request(app)
-      .post('/updateDirection')
-      .send({ direction: Direction.SOUTH });
-
-    expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Error updating direction');
-  });
-
-  it('should update the robot direction', async () => {
-    await request(app).post('/place').send({
-      x: 0,
-      y: 0,
-      direction: Direction.NORTH,
-    });
-
-    const response = await request(app)
-      .post('/updateDirection')
-      .send({ direction: Direction.SOUTH });
-
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Robot direction updated to SOUTH');
-    expect(response.body.status.direction).toBe(Direction.SOUTH);
-  });
-
   it('should return error when moving robot before placing the robot', async () => {
     const response = await request(app).post('/move');
 
